@@ -67,6 +67,7 @@
     }
     const lands = @json($lands)
 
+    console.log('{{env('MAPBOX_TOKEN')}}')
     mapboxgl.accessToken = '{{env('MAPBOX_TOKEN')}}';
     const map = new mapboxgl.Map({
         container: 'map', // container ID
@@ -77,8 +78,11 @@
         zoom: 15 // starting zoom
     });
 
-    $(document).ready(() => {
-        map.on('load', () => {
+    map.doubleClickZoom.disable();
+
+    $(document).ready(function () {
+        map.on('load', function () {
+
             lands.map((land, key) => {
                 let marker = new mapboxgl.Marker(document.getElementById(`marker-${key}`)).setLngLat([
                     land?.longitude ?? default_coord.longitude,
@@ -97,12 +101,79 @@
                     $(`#marker-${key}`).empty();
                 });
 
-                $(`#marker-${key}`).on('doubleclick', () => {
-                    console.log('wkwk')
+                $(`#marker-${key}`).dblclick(() => {
+                    let coords = lands[key].land_area.split(';').map(coord => coord.split(',').map(Number));
+
+                    if (map.getSource(`land-area-${key}`)) {
+                        map.removeLayer(`land-area-layer-${key}`);
+                        map.removeSource(`land-area-${key}`);
+                    } else {
+                        map.addSource(`land-area-${key}`, {
+                            type: 'geojson',
+                            data: {
+                                type: 'Feature',
+                                geometry: {
+                                    type: 'Polygon',
+                                    coordinates: [coords]
+                                }
+                            }
+                        });
+
+                        // Add a layer to display the polygon
+                        map.addLayer({
+                            id: `land-area-layer-${key}`,
+                            type: 'fill',
+                            source: `land-area-${key}`,
+                            layout: {},
+                            paint: {
+                                'fill-color': 'pink', // Fill color
+                                'fill-opacity': 0.5 // Fill opacity
+                            }
+                        });
+                    }
                 });
             })
         })
     })
+
+
 </script>
+
+A
+"longitude" => "107.4298798",
+"latitude" => "-7.0935361",
+
+B
+"longitude" => "107.4292774",
+"latitude" => "-7.0922358",
+
+C
+"longitude" => "107.4338851",
+"latitude" => "-7.0935148",
+
+D
+"longitude" => "107.432633",
+"latitude" => "-7.096995",
+
+E
+"longitude" => "107.429438",
+"latitude" => "-7.0944275",
+
+F
+"longitude" => "107.4292487",
+"latitude" => "-7.0920756",
+
+G
+"longitude" => "107.4296957",
+"latitude" => "-7.0924941",
+
+H
+"longitude" => "107.4303603",
+"latitude" => "-7.0928069",
+
+I
+"longitude" => "107.4341283",
+"latitude" => "-7.0970435",
+
 
 </html>
