@@ -136,44 +136,6 @@
         })
     })
 
-
 </script>
-
-A
-"longitude" => "107.4298798",
-"latitude" => "-7.0935361",
-
-B
-"longitude" => "107.4292774",
-"latitude" => "-7.0922358",
-
-C
-"longitude" => "107.4338851",
-"latitude" => "-7.0935148",
-
-D
-"longitude" => "107.432633",
-"latitude" => "-7.096995",
-
-E
-"longitude" => "107.429438",
-"latitude" => "-7.0944275",
-
-F
-"longitude" => "107.4292487",
-"latitude" => "-7.0920756",
-
-G
-"longitude" => "107.4296957",
-"latitude" => "-7.0924941",
-
-H
-"longitude" => "107.4303603",
-"latitude" => "-7.0928069",
-
-I
-"longitude" => "107.4341283",
-"latitude" => "-7.0970435",
-
 
 </html>
