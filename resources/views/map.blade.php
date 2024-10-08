@@ -67,7 +67,6 @@
     }
     const lands = @json($lands)
 
-    console.log('{{env('MAPBOX_TOKEN')}}')
     mapboxgl.accessToken = '{{env('MAPBOX_TOKEN')}}';
     const map = new mapboxgl.Map({
         container: 'map', // container ID
